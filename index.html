@@ -31,7 +31,8 @@
       padding: 25px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      animation: fadeIn 1.2s ease;
+      animation: fadeIn 1s ease;
+      position: relative;
     }
 
     h1 {
@@ -48,20 +49,29 @@
     }
 
     button {
-      background: #ff4d6d;
-      color: white;
       border: none;
       padding: 12px 22px;
       border-radius: 25px;
       font-size: 1rem;
       cursor: pointer;
-      margin-top: 15px;
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s ease;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      background: #e63e5c;
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background: #ddd;
+      color: #444;
+      position: absolute;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+      height: 100px;
+      position: relative;
     }
 
     .hidden {
@@ -81,7 +91,6 @@
 
     .heart {
       position: absolute;
-      color: red;
       font-size: 18px;
       animation: floatUp 6s linear infinite;
       opacity: 0.7;
@@ -107,37 +116,35 @@
   <div class="card" id="page1">
     <h1>Hey Khyati ❤️</h1>
     <p>
-      From the moment you came into my life,  
-      everything started feeling brighter ✨
+      Life feels warmer, brighter and happier  
+      because you are in it ✨
     </p>
-    <button onclick="nextPage()">Tap to continue 💕</button>
+    <button class="yes" onclick="nextPage()">Tap to continue 💕</button>
   </div>
 
   <div class="card hidden" id="page2">
     <h1>Dear Khyati 💖</h1>
     <p>
-      Your smile, your kindness, and your presence  
-      make my world a better place every single day.
+      Your smile has a way of making everything better  
+      and my heart feels at home with you 💫
     </p>
-    <p>
-      You are not just special…  
-      you are my favorite person 💫
-    </p>
-    <button onclick="nextPage()">One last thing 🥺</button>
+    <button class="yes" onclick="nextPage()">One last thing 🥺</button>
   </div>
 
   <div class="card hidden" id="page3">
     <h1>So Khyati… 💘</h1>
-    <p>
-      Will you be my Valentine? 🌹
-    </p>
-    <button onclick="yesClicked()">YES 💞</button>
+    <p>Will you be my Valentine? 🌹</p>
+
+    <div class="btn-group">
+      <button class="yes" onclick="yesClicked()">YES 💞</button>
+      <button class="no" id="noBtn">NO 🙈</button>
+    </div>
   </div>
 
   <div class="card hidden" id="page4">
     <h1>YAYYYY!!! 🎉💖</h1>
     <p>
-      You just made me the happiest person alive 😍  
+      Best decision ever 😍  
       Happy Valentine’s Day, Khyati ❤️
     </p>
   </div>
@@ -156,6 +163,18 @@
       document.getElementById("page4").classList.remove("hidden");
     }
 
+    const noBtn = document.getElementById("noBtn");
+
+    function moveNoButton() {
+      const x = Math.random() * 200;
+      const y = Math.random() * 60;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Works for both mobile & desktop
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -164,9 +183,7 @@
       heart.style.animationDuration = (4 + Math.random() * 3) + "s";
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }
 
     setInterval(createHeart, 500);
